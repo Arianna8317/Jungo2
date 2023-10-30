@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <title>Содержание статьи</title>
+</head>
+
+<body>
+    <h1>Заказ : {{ order.id }}</h1>
+    <p>Дата : {{ order.date_ordered }}</p>
+    <p> Общая сумма : {{ order.total_price }}</p>
+    {% for orderproduct in orderproducts %}
+    <p>
+        {{ orderproduct.product }}<br>
+
+    </p>
+
+    {% endfor %}
+
+</body>
+
+</html>
