@@ -32,7 +32,7 @@ CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    'irafita.pythonanywhere.com',
+    'Irafita.pythonanywhere.com',
 
 ]
 
@@ -89,8 +89,8 @@ WSGI_APPLICATION = 'Lesson2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'irafita$default',
-        'USER': 'irafita',
+        'NAME': 'Irafita$default',
+        'USER': 'Irafita',
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
         'HOST': 'Irafita.mysql.pythonanywhere-services.com',
         'OPTIONS': {
