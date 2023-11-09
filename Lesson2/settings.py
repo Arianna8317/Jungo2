@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'Lesson2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'irafita$my_shop',
+        'NAME': 'irafita$default',
         'USER': 'irafita',
         'PASSWORD': os.getenv('MYSQL_PASSWORD'),
         'HOST': 'Irafita.mysql.pythonanywhere-services.com',
