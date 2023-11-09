@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +21,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g2z0fzl+%wn8s=@&*k+@8asa2p!j^f!wyl0kmvtrr8a*996=65'
+# SECRET_KEY = 'django-insecure-g2z0fzl+%wn8s=@&*k+@8asa2p!j^f!wyl0kmvtrr8a*996=65'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'irafita.pythonanywhere.com',
+
+]
+
+STATIC_ROOT = BASE_DIR / 'static/'
 
 # Application definition
 
@@ -81,6 +91,20 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'irafita$my_shop',
+        'USER': 'irafita',
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': 'mysql_hostname',
+        'OPTIONS': {
+            'init_command': "SET NAMES 'utf8mb4';SET sql_mode='STRICT_TRANS_TABLES'",
+            'charset': 'utf8mb4',
+            },
+    }
+    }
 
 
 # Password validation
