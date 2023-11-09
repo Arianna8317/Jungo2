@@ -7,6 +7,8 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from .forms import ProductForm, ImageForm
 import logging
+from django.db.models import Sum
+
 logger = logging.getLogger(__name__)
 
 # Create your views here.
@@ -23,16 +25,19 @@ def client_orders(request, client_id):
     orders = Order.objects.filter(customer=client)
     return render(request, "app2/client_orders.html", {'client': client, 'orders': orders})
 
+
 def client_orders_filtered(request, client_id, days_ago):
     client = get_object_or_404(Client, pk=client_id)
     orders = Order.objects.filter(date_ordered__gt=datetime.now()-timedelta(days=days_ago))
     orders = orders.filter(customer=client_id)
     return render(request, "app2/client_orders.html", {'client': client, 'orders': orders})
 
+
 def order_view(request, order_id):
     order = get_object_or_404(Order, pk=order_id)
     orderproducts = OrderProducts.objects.filter(order=order)
     return render(request, "app2/order_view.html", {'order': order, 'orderproducts': orderproducts})
+
 
 def upload_image(request):
     if request.method == 'POST':
@@ -44,6 +49,7 @@ def upload_image(request):
     else:
         form = ProductForm()
     return render(request, 'app2/upload_image.html', {'form':  form})
+
 
 def add_product(request):
     if request.method == 'POST':
@@ -67,3 +73,10 @@ def add_product(request):
         return render(request, 'app2/edit_products_form.html', {'form': form, 'message': message})
     
 
+def total_in_db(request):
+    total = Product.objects.aggregate(Sum('price'))
+    context = {
+        'title': 'Общая цена товаров в каталоге -  посчитано в базе данных',
+        'total': total,
+    }
+    return render(request, 'myapp6/total_count.html', context)

@@ -11,7 +11,7 @@ class Client(models.Model):
     phone_number = models.CharField(max_length=10)
 
     def __str__(self):
-        return f'Client name: {self.name}, email: {self.email}, address: {self.address}'
+        return f'Name: {self.name}, email: {self.email}, address: {self.address}'
 
 
 class Product(models.Model):
@@ -25,13 +25,21 @@ class Product(models.Model):
     def __str__(self):
         return f'Product name: {self.name}, price: {self.price}, description: {self.description}'
 
+
 class Order(models.Model):
     customer = models.ForeignKey(Client, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product)
     date_ordered = models.DateTimeField(auto_now_add=True)
     total_price = models.DecimalField(max_digits=8, decimal_places=2)
 
+    def __str__(self):
+        return f'Клиент: {self.customer}, продукт : {self.products}, сумма заказа: {self.total_price}'
+
+
 class OrderProducts (models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'Заказ: {self.order}, продукт : {self.product}, количество: {self.quantity}'
